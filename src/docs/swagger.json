@@ -1,0 +1,54 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/health/check": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Health"
+                ],
+                "summary": "Check external services statuses",
+                "responses": {
+                    "200": {
+                        "description": "Service healthy",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/communication.ServiceHealthyResponse"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Service non-healthy",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/communication.ServiceHealthyResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "communication.ServiceHealthyResponse": {
+            "type": "object",
+            "properties": {
+                "serviceName": {
+                    "type": "string",
+                    "example": "redis"
+                },
+                "status": {
+                    "type": "string",
+                    "example": "up/down"
+                }
+            }
+        }
+    }
+}

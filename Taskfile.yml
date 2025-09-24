@@ -1,0 +1,26 @@
+version: '3'
+
+tasks:
+  up:
+    desc: "Run project"
+    cmds:
+      - go run src/main.go
+    silent: false
+  test:pattern:usecase:cover:
+    desc: "Run tests for files matching *_usecase.go with coverage"
+    cmds:
+      - |
+        PKGS=$(find ./src -type f -name "*_usecase.go" -print0 | xargs -0 -I {} dirname {} | sort -u | xargs -I {} go list -f '{{.ImportPath}}' {})
+        if [ -z "$PKGS" ]; then
+          echo "No usecase packages found to test."
+        else
+          echo "Running tests for packages: $PKGS"
+          go test -coverprofile=cover/coverage.out -v $PKGS
+          go tool cover -html=cover/coverage.out -o cover/coverage.html
+        fi
+    shell: bash
+  lint:
+    desc: "Run project's lint"
+    cmds:
+      - golangci-lint run
+    silent: false

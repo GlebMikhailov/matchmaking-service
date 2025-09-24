@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    networks:
+      - matchmaking_network
+
+  nats:
+    image: nats:latest
+    container_name: nats
+    command: "-js -m 8222"
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    volumes:
+      - ./db:/var/lib/nats
+    restart: always
+    networks:
+      - matchmaking_network
+
+networks:
+  matchmaking_network:

@@ -1,0 +1,34 @@
+definitions:
+  communication.ServiceHealthyResponse:
+    properties:
+      serviceName:
+        example: redis
+        type: string
+      status:
+        example: up/down
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /health/check:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Service healthy
+          schema:
+            items:
+              $ref: '#/definitions/communication.ServiceHealthyResponse'
+            type: array
+        "500":
+          description: Service non-healthy
+          schema:
+            items:
+              $ref: '#/definitions/communication.ServiceHealthyResponse'
+            type: array
+      summary: Check external services statuses
+      tags:
+      - Health
+swagger: "2.0"
