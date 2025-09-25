@@ -44,7 +44,7 @@ The project follows a **feature-based modular architecture** with clear separati
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Go 1.21+
+- Go 1.25+
 - Docker and Docker Compose
 - Taskfile (optional)
 
@@ -102,10 +102,10 @@ type MatchUseCase interface {
 task test
 
 # Run tests with coverage
-task test:coverage
+test:pattern:usecase:cover
 
-# Integration tests
-task test:integration
+# Manual tests
+sh scripts/testing/manual-testing.sh
 ```
 
 ### Testing Features:
@@ -122,16 +122,9 @@ task --list  # Show all available tasks
 
 # Development
 task up            # Run application in development mode
-task build         # Build the application
 task lint          # Run code quality checks
 
-# Testing
-task test          # Execute unit tests
-task test:cover    # Run tests with coverage report
-
-# Documentation
-task docs          # Generate API documentation
-task docs:serve    # Serve documentation locally
+task test:pattern:usecase:cover    # Run tests with coverage report
 ```
 
 ### Taskfile Benefits:
@@ -142,18 +135,8 @@ task docs:serve    # Serve documentation locally
 
 ## 🏭 Configuration
 
-Application configuration via environment variables. See [.env.example](.env.example) for reference:
+Application configuration via environment variables. See [.env.example](.env.example) for reference
 
-```bash
-# Core Services
-NATS_URL=nats://localhost:4222
-REDIS_URL=redis://localhost:6379
-
-# Application
-HTTP_PORT=8080
-LOG_LEVEL=info
-ENVIRONMENT=development
-```
 
 ## 📊 Monitoring & Logging
 
@@ -167,16 +150,7 @@ ENVIRONMENT=development
 ### Container Management
 ```bash
 # Build and run services
-task docker:up
-
-# Build application image
-task docker:build
-
-# Stop all services
-task docker:down
-
-# Clean up resources
-task docker:clean
+docker-compose up
 ```
 
 ## 🔮 Roadmap
@@ -186,7 +160,6 @@ task docker:clean
 - [ ] Kubernetes deployment manifests
 - [ ] Enhanced dynamic support for bots search
 - [ ] Metrics collection and visualization
-- [ ] Additional sidecar features for observability
 
 ## 📄 License
 
